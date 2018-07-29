@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge.app;
+package com.example.amineelouattar.codingchallenge.app.module;
 
 import android.app.Application;
 
@@ -9,7 +9,7 @@ import dagger.Provides;
 
 @Module
 public class AppModule {
-    Application application;
+    private Application application;
 
     public AppModule(Application application) {
         this.application = application;
