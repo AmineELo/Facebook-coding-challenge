@@ -28,7 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+public class AlbumListActivity extends AppCompatActivity {
 
     private CallbackManager mCallBackManager;
     private ImageView profilePictureHolder;
@@ -93,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
                                 albumCovers[i] = data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url");
                             }
 
-                            CustomListAdapter adapter = new CustomListAdapter(MainActivity.this, albumTitles, albumCovers);
+                            CustomListAdapter adapter = new CustomListAdapter(AlbumListActivity.this, albumTitles, albumCovers);
                             albumList.setAdapter(adapter);
 
                             albumList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    Toast.makeText(MainActivity.this, i + " Clicked", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(MainActivity.this, GridPictures.class);
+                                    Toast.makeText(AlbumListActivity.this, i + " Clicked", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AlbumListActivity.this, GridPictures.class);
                                     intent.putExtra("id", albumId[i]);
                                     startActivity(intent);
                                 }
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout :
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(AlbumListActivity.this, LoginActivity.class));
                 LoginManager.getInstance().logOut();
                 finish();
                 return true;
