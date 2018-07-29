@@ -31,19 +31,19 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private CallbackManager mCallBackManager;
-    private ImageView profilpic_holder;
+    private ImageView profilePictureHolder;
     private TextView textArea;
-    private ListView album_list;
-    private String[] album_titles, album_covers, album_id;
+    private ListView albumList;
+    private String[] albumTitles, albumCovers, albumId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mCallBackManager = CallbackManager.Factory.create();
-        profilpic_holder = (ImageView) findViewById(R.id.profile_picture);
-        album_list = (ListView) findViewById(R.id.album_list);
-        textArea = (TextView) findViewById(R.id.textArea);
+        profilePictureHolder = findViewById(R.id.profile_picture);
+        albumList = findViewById(R.id.album_list);
+        textArea = findViewById(R.id.textArea);
 
         GraphRequest request = GraphRequest.newGraphPathRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("FACEBOOK RESPONSE", graphObject.getJSONObject("picture").getJSONObject("data").getString("url"));
                             Picasso.get()
                                     .load(graphObject.getJSONObject("picture").getJSONObject("data").getString("url"))
-                                    .into(profilpic_holder);
+                                    .into(profilePictureHolder);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -83,25 +83,25 @@ public class MainActivity extends AppCompatActivity {
 
                             JSONObject dataResponse = response.getJSONObject();
                             JSONArray data = dataResponse.getJSONArray("data");
-                            album_titles = new String[data.length()];
-                            album_covers = new String[data.length()];
-                            album_id = new String[data.length()];
+                            albumTitles = new String[data.length()];
+                            albumCovers = new String[data.length()];
+                            albumId = new String[data.length()];
 
                             for(int i = 0; i < data.length(); i++){
-                                album_titles[i] = data.getJSONObject(i).getString("name");
-                                album_id[i] = data.getJSONObject(i).getString("id");
-                                album_covers[i] = data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url");
+                                albumTitles[i] = data.getJSONObject(i).getString("name");
+                                albumId[i] = data.getJSONObject(i).getString("id");
+                                albumCovers[i] = data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url");
                             }
 
-                            CustomListAdapter adapter = new CustomListAdapter(MainActivity.this, album_titles, album_covers);
-                            album_list.setAdapter(adapter);
+                            CustomListAdapter adapter = new CustomListAdapter(MainActivity.this, albumTitles, albumCovers);
+                            albumList.setAdapter(adapter);
 
-                            album_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            albumList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     Toast.makeText(MainActivity.this, i + " Clicked", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(MainActivity.this, GridPictures.class);
-                                    intent.putExtra("id", album_id[i]);
+                                    intent.putExtra("id", albumId[i]);
                                     startActivity(intent);
                                 }
                             });
