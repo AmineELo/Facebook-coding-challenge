@@ -1,7 +1,7 @@
 package com.example.amineelouattar.codingchallenge.album_list.module;
 
-import android.content.Context;
-
+import com.example.amineelouattar.codingchallenge.album_list.AlbumListContract;
+import com.example.amineelouattar.codingchallenge.album_list.AlbumListModel;
 import com.example.amineelouattar.codingchallenge.utils.ActivityScope;
 
 import dagger.Module;
@@ -9,15 +9,21 @@ import dagger.Provides;
 
 @Module
 public class AlbumListModule {
-    private Context context;
+    private AlbumListContract.AlbumListView view;
 
-    public AlbumListModule(Context context) {
-        this.context = context;
+    public AlbumListModule(AlbumListContract.AlbumListView view) {
+        this.view = view;
     }
 
     @ActivityScope
     @Provides
-    public Context provideContext(){
-        return context;
+    public AlbumListContract.AlbumListView provideContext(){
+        return view;
+    }
+
+    @ActivityScope
+    @Provides
+    public AlbumListContract.AlbumListModel provideModel(){
+        return new AlbumListModel();
     }
 }
