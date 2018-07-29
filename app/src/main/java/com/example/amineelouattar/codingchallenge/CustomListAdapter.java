@@ -43,8 +43,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         title.setText(album_titles[position]);
 
-        Picasso.with(context)
-                .load(album_covers[position])
+        Picasso.get().load(album_covers[position])
                 .into(cover);
 
 

@@ -49,7 +49,7 @@ public class FullScreenActivity extends AppCompatActivity {
                             JSONObject dataResponse = response.getJSONObject();
                             JSONArray data = dataResponse.getJSONArray("images");
 
-                            Picasso.with(FullScreenActivity.this)
+                            Picasso.get()
                                     .load(data.getJSONObject(0).getString("source"))
                                     .placeholder(R.drawable.placeholderthumbnail)
                                     .error(R.drawable.androiderror)

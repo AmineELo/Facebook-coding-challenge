@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                             textArea.setText(graphObject.getString("name"));
                             Log.d("FACEBOOK RESPONSE", graphObject.getJSONObject("picture").getJSONObject("data").getString("url"));
-                            Picasso.with(MainActivity.this)
+                            Picasso.get()
                                     .load(graphObject.getJSONObject("picture").getJSONObject("data").getString("url"))
                                     .into(profilpic_holder);
                         } catch (JSONException e) {

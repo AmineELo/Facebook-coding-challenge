@@ -60,25 +60,12 @@ public class ImageGridAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) v.getTag();
         }
-        Picasso.with(context)
+        Picasso.get()
                 .load(images[i])
                 .placeholder(R.drawable.placeholderthumbnail)
                 .error(R.drawable.androiderror)
                 .fit()
-                .into(holder.imageView, new Callback() {
-
-                    @Override
-                    public void onSuccess() {
-                        holder.imageView.setVisibility(View.VISIBLE);
-                        holder.progressBar.setVisibility(View.INVISIBLE);
-                    }
-
-                    @Override
-                    public void onError() {
-                        holder.progressBar.setVisibility(View.VISIBLE);
-                        holder.imageView.setVisibility(View.INVISIBLE);
-                    }
-                });
+                .into(holder.imageView);
 
         return v;
     }
