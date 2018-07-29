@@ -19,8 +19,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginButton mLoginButton;
     private CallbackManager mCallBackManager;
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
 
 
     @Override
@@ -28,16 +26,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mSharedPreferences = this.getSharedPreferences(Variables.SHARED_PREFERENCES, Variables.SHPREF_MODE);
-        mEditor = mSharedPreferences.edit();
-
         if(AccessToken.getCurrentAccessToken() != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
 
-        mLoginButton = (LoginButton) findViewById(R.id.login_button);
+        mLoginButton = findViewById(R.id.login_button);
         mLoginButton.setReadPermissions("user_about_me");
         mLoginButton.setReadPermissions("user_photos");
 
