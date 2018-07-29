@@ -1,10 +1,16 @@
 package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.amineelouattar.codingchallenge.album_list.model.User;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.inject.Inject;
 
@@ -28,7 +34,7 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
         GraphRequest.Callback responseCallback = new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
-                extractAlbums(response);
+                extractUserInfo(response);
             }
         };
 
@@ -47,6 +53,16 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
 
     @Override
     public void extractUserInfo(GraphResponse response) {
-
+        Log.d("FACEBOOK RESPONSE", response.toString());
+        try {
+            JSONObject graphObject = response.getJSONObject();
+            User user = new User(
+                    graphObject.getString("name"),
+                    graphObject.getJSONObject("picture").getJSONObject("data").getString("url")
+            );
+            view.updateUserSection(user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
