@@ -2,6 +2,8 @@ package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.content.Context;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 
 import javax.inject.Inject;
@@ -21,7 +23,16 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
 
     @Override
     public void getUserInfo() {
+        String graphPath = "/me?fields=about,name,picture";
 
+        GraphRequest.Callback responseCallback = new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                extractAlbums(response);
+            }
+        };
+
+        model.executeGraphRequest(AccessToken.getCurrentAccessToken(), graphPath, responseCallback);
     }
 
     @Override
