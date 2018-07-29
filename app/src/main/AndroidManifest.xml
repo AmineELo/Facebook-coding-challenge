@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,9 +40,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".GridPictures" />
-        <activity android:name=".FullScreenActivity"></activity>
+        <activity android:name=".album_list.MainActivity" />
+        <activity android:name=".pictures_grid.GridPictures" />
+        <activity android:name=".picture_fullscreen.FullScreenActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.pictures_grid;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.example.amineelouattar.codingchallenge.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

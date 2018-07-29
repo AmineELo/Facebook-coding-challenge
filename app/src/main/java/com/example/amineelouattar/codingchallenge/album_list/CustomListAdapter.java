@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.amineelouattar.codingchallenge.R;
 import com.squareup.picasso.Picasso;
 
 /**

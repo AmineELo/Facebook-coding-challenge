@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.picture_fullscreen;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,11 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.example.amineelouattar.codingchallenge.R;
+import com.example.amineelouattar.codingchallenge.login.LoginActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;

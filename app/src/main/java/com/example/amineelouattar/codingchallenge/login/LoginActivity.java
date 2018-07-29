@@ -1,10 +1,13 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.amineelouattar.codingchallenge.R;
+import com.example.amineelouattar.codingchallenge.utils.Variables;
+import com.example.amineelouattar.codingchallenge.album_list.MainActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

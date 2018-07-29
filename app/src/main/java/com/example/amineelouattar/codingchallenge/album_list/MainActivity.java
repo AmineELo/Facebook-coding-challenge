@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
+import com.example.amineelouattar.codingchallenge.login.LoginActivity;
+import com.example.amineelouattar.codingchallenge.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;

@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.pictures_grid;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +12,14 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.amineelouattar.codingchallenge.R;
+import com.example.amineelouattar.codingchallenge.login.LoginActivity;
+import com.example.amineelouattar.codingchallenge.picture_fullscreen.FullScreenActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
