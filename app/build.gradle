@@ -29,4 +29,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.dagger:dagger:2.16'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
 }
