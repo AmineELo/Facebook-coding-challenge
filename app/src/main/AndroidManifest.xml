@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".login.LoginActivity"
+            android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,7 +44,7 @@
         </activity>
         <activity android:name=".album_list.AlbumListActivity" />
         <activity android:name=".pictures_grid.GridPicturesActivity" />
-        <activity android:name=".picture_fullscreen.FullScreenActivity"></activity>
+        <activity android:name=".picture_fullscreen.FullScreenActivity"/>
     </application>
 
 </manifest>
