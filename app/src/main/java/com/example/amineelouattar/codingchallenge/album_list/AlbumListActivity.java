@@ -14,6 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.amineelouattar.codingchallenge.BaseApplication;
+import com.example.amineelouattar.codingchallenge.album_list.component.DaggerAlbumListComponent;
+import com.example.amineelouattar.codingchallenge.album_list.model.Album;
+import com.example.amineelouattar.codingchallenge.album_list.model.User;
+import com.example.amineelouattar.codingchallenge.album_list.module.AlbumListModule;
+import com.example.amineelouattar.codingchallenge.album_list.module.ContextModule;
 import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
 import com.example.amineelouattar.codingchallenge.login.LoginActivity;
 import com.example.amineelouattar.codingchallenge.R;
@@ -28,47 +34,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AlbumListActivity extends AppCompatActivity {
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class AlbumListActivity extends AppCompatActivity implements AlbumListContract.AlbumListView {
 
     private CallbackManager mCallBackManager;
     private ImageView profilePictureHolder;
     private TextView textArea;
     private ListView albumList;
     private String[] albumTitles, albumCovers, albumId;
+    @Inject
+    AlbumListPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        injectDaggerComponent();
+        bindViews();
+
         mCallBackManager = CallbackManager.Factory.create();
-        profilePictureHolder = findViewById(R.id.profile_picture);
-        albumList = findViewById(R.id.album_list);
-        textArea = findViewById(R.id.textArea);
 
-        GraphRequest request = GraphRequest.newGraphPathRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me?fields=about,name,picture",
-                new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
-                        Log.d("FACEBOOK RESPONSE", response.toString());
-                        try {
-                            JSONObject graphObject = response.getJSONObject();
-
-                            textArea.setText(graphObject.getString("name"));
-                            Log.d("FACEBOOK RESPONSE", graphObject.getJSONObject("picture").getJSONObject("data").getString("url"));
-                            Picasso.get()
-                                    .load(graphObject.getJSONObject("picture").getJSONObject("data").getString("url"))
-                                    .into(profilePictureHolder);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-        );
-
-        request.executeAsync();
+        presenter.getUserInfo();
 
         GraphRequest albums = GraphRequest.newGraphPathRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -145,5 +135,32 @@ public class AlbumListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallBackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void updateAlbumList(List<Album> albumList) {
+    }
+
+    @Override
+    public void updateUserSection(User user) {
+        textArea.setText(user.getName());
+        Picasso.get()
+                .load(user.getPictureUrl())
+                .into(profilePictureHolder);
+    }
+
+    private void bindViews(){
+        profilePictureHolder = findViewById(R.id.profile_picture);
+        albumList = findViewById(R.id.album_list);
+        textArea = findViewById(R.id.textArea);
+    }
+
+    private void injectDaggerComponent(){
+        DaggerAlbumListComponent.builder()
+                .appComponent(((BaseApplication)getApplicationContext()).getAppComponent())
+                .albumListModule(new AlbumListModule(this))
+                .contextModule(new ContextModule(this))
+                .build()
+                .inject(this);
     }
 }
