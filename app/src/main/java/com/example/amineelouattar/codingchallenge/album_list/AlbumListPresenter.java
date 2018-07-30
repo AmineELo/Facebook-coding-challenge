@@ -1,16 +1,26 @@
 package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
+import com.example.amineelouattar.codingchallenge.album_list.model.Album;
 import com.example.amineelouattar.codingchallenge.album_list.model.User;
+import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -43,12 +53,38 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
 
     @Override
     public void getAlbums() {
+        String graphPath = "/me/albums?fields=cover_photo,picture,name";
+        GraphRequest.Callback responseCallback = new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                extractAlbums(response);
+            }
+        };
+        model.executeGraphRequest(AccessToken.getCurrentAccessToken(), graphPath, responseCallback);
 
     }
 
     @Override
     public void extractAlbums(GraphResponse response) {
+        List<Album> albumList = new ArrayList<>();
+        Log.d("FACEBOOK RESPONSE", response.toString());
+        try{
+            JSONObject dataResponse = response.getJSONObject();
+            JSONArray data = dataResponse.getJSONArray("data");
 
+            for(int i = 0; i < data.length(); i++){
+                albumList.add(new Album(
+                        data.getJSONObject(i).getString("id"),
+                        data.getJSONObject(i).getString("name"),
+                        data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url")
+                ));
+            }
+            view.updateAlbumList(albumList);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+
+        }
     }
 
     @Override
