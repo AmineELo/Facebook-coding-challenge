@@ -3,6 +3,8 @@ package com.example.amineelouattar.codingchallenge.album_list;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.amineelouattar.codingchallenge.BaseApplication;
+import com.example.amineelouattar.codingchallenge.album_list.adapter.AlbumListAdapter;
 import com.example.amineelouattar.codingchallenge.album_list.component.DaggerAlbumListComponent;
 import com.example.amineelouattar.codingchallenge.album_list.model.Album;
 import com.example.amineelouattar.codingchallenge.album_list.model.User;
@@ -34,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,8 +47,8 @@ public class AlbumListActivity extends AppCompatActivity implements AlbumListCon
     private CallbackManager mCallBackManager;
     private ImageView profilePictureHolder;
     private TextView textArea;
-    private ListView albumList;
-    private String[] albumTitles, albumCovers, albumId;
+    private RecyclerView albumList;
+    private AlbumListAdapter adapter;
     @Inject
     AlbumListPresenter presenter;
 
@@ -55,58 +59,12 @@ public class AlbumListActivity extends AppCompatActivity implements AlbumListCon
 
         injectDaggerComponent();
         bindViews();
+        setUpAlbumList();
 
         mCallBackManager = CallbackManager.Factory.create();
 
         presenter.getUserInfo();
-
-        GraphRequest albums = GraphRequest.newGraphPathRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me/albums?fields=cover_photo,picture,name",
-                new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
-
-                        Log.d("FACEBOOK RESPONSE", response.toString());
-                        try{
-
-
-                            JSONObject dataResponse = response.getJSONObject();
-                            JSONArray data = dataResponse.getJSONArray("data");
-                            albumTitles = new String[data.length()];
-                            albumCovers = new String[data.length()];
-                            albumId = new String[data.length()];
-
-                            for(int i = 0; i < data.length(); i++){
-                                albumTitles[i] = data.getJSONObject(i).getString("name");
-                                albumId[i] = data.getJSONObject(i).getString("id");
-                                albumCovers[i] = data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url");
-                            }
-
-                            CustomListAdapter adapter = new CustomListAdapter(AlbumListActivity.this, albumTitles, albumCovers);
-                            albumList.setAdapter(adapter);
-
-                            albumList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    Toast.makeText(AlbumListActivity.this, i + " Clicked", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(AlbumListActivity.this, GridPictures.class);
-                                    intent.putExtra("id", albumId[i]);
-                                    startActivity(intent);
-                                }
-                            });
-
-
-
-                        }catch (JSONException e){
-                            e.printStackTrace();
-
-                        }
-                    }
-                }
-        );
-
-        albums.executeAsync();
+        presenter.getAlbums();
     }
 
     @Override
@@ -139,6 +97,7 @@ public class AlbumListActivity extends AppCompatActivity implements AlbumListCon
 
     @Override
     public void updateAlbumList(List<Album> albumList) {
+        adapter.updateAlbumList(albumList);
     }
 
     @Override
@@ -147,6 +106,13 @@ public class AlbumListActivity extends AppCompatActivity implements AlbumListCon
         Picasso.get()
                 .load(user.getPictureUrl())
                 .into(profilePictureHolder);
+    }
+
+    private void setUpAlbumList(){
+        adapter = new AlbumListAdapter(new ArrayList<Album>(), this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        albumList.setLayoutManager(layoutManager);
+        albumList.setAdapter(adapter);
     }
 
     private void bindViews(){
