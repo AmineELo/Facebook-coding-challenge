@@ -8,15 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="120dip"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        style="@style/ProgressBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:indeterminate="false"
-        android:max="100" />
+        android:scaleType="centerCrop" />
 
 </FrameLayout>
