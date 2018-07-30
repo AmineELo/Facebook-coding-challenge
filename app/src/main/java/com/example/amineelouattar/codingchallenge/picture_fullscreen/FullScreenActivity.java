@@ -22,11 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.inject.Inject;
+
 public class FullScreenActivity extends AppCompatActivity implements FullScreenContract.FullScreenView {
 
     private CallbackManager mCallBackManager;
     private ImageView imageView;
     private String photoId;
+    @Inject FullScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
