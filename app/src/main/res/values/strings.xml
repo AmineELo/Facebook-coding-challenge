@@ -2,5 +2,5 @@
     <string name="app_name">Coding challenge</string>
     <string name="facebook_app_id">1588693244502311</string>
     <string name="fb_login_protocol_scheme">fb1588693244502311</string>
-
+    <string name="photo_count_holder">%1$s photos</string>
 </resources>

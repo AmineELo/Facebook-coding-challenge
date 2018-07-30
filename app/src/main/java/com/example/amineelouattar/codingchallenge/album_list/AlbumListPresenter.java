@@ -34,7 +34,7 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
 
     @Override
     public void getUserInfo() {
-        String graphPath = "/me?fields=about,name,picture";
+        String graphPath = "/me?fields=about,name,picture.type(large)";
 
         GraphRequest.Callback responseCallback = new GraphRequest.Callback() {
             @Override
@@ -48,7 +48,7 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
 
     @Override
     public void getAlbums() {
-        String graphPath = "/me/albums?fields=cover_photo,picture,name";
+        String graphPath = "/me/albums?fields=cover_photo,picture,name,count";
         GraphRequest.Callback responseCallback = new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
@@ -71,7 +71,8 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
                 albumList.add(new Album(
                         data.getJSONObject(i).getString("id"),
                         data.getJSONObject(i).getString("name"),
-                        data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url")
+                        data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url"),
+                        data.getJSONObject(i).getString("count")
                 ));
             }
             view.updateAlbumList(albumList);

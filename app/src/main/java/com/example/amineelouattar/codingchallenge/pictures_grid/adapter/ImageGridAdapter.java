@@ -58,8 +58,6 @@ public class ImageGridAdapter extends BaseAdapter {
 
             holder.imageView = v.findViewById(R.id.image);
 
-            holder.progressBar = v.findViewById(R.id.progress);
-
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();
@@ -82,7 +80,6 @@ public class ImageGridAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView imageView;
-        ProgressBar progressBar;
     }
 
 }

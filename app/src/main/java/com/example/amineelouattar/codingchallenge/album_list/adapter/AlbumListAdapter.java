@@ -39,6 +39,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Albu
     @Override
     public void onBindViewHolder(@NonNull AlbumListViewHolder holder, int position) {
         holder.albumTitle.setText(albumList.get(position).getAlbumName());
+        holder.albumCount.setText(context.getString(R.string.photo_count_holder, albumList.get(position).getAlbumCount()));
         Picasso.get()
                 .load(albumList.get(position).getAlbumCoverUrl())
                 .into(holder.albumCover);
@@ -57,12 +58,13 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Albu
     class AlbumListViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView albumCover;
-        private TextView albumTitle;
+        private TextView albumTitle, albumCount;
 
         private AlbumListViewHolder(View itemView) {
             super(itemView);
             albumCover = itemView.findViewById(R.id.album_cover);
             albumTitle = itemView.findViewById(R.id.album_title);
+            albumCount = itemView.findViewById(R.id.album_count);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
