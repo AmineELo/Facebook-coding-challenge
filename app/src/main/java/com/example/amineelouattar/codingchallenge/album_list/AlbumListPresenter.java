@@ -71,7 +71,8 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
                 albumList.add(new Album(
                         data.getJSONObject(i).getString("id"),
                         data.getJSONObject(i).getString("name"),
-                        data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url")
+                        data.getJSONObject(i).getJSONObject("picture").getJSONObject("data").getString("url"),
+                        data.getJSONObject(i).getString("count")
                 ));
             }
             view.updateAlbumList(albumList);
