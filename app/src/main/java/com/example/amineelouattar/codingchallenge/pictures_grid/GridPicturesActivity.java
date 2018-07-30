@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.amineelouattar.codingchallenge.BaseApplication;
 import com.example.amineelouattar.codingchallenge.R;
@@ -18,17 +17,14 @@ import com.example.amineelouattar.codingchallenge.login.LoginActivity;
 import com.example.amineelouattar.codingchallenge.picture_fullscreen.FullScreenActivity;
 import com.example.amineelouattar.codingchallenge.pictures_grid.adapter.ImageGridAdapter;
 import com.example.amineelouattar.codingchallenge.pictures_grid.component.DaggerGridPicturesComponent;
+import com.example.amineelouattar.codingchallenge.pictures_grid.model.Picture;
 import com.example.amineelouattar.codingchallenge.pictures_grid.module.GridPicturesModule;
 import com.example.amineelouattar.codingchallenge.utils.module.ContextModule;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,9 +32,8 @@ import javax.inject.Inject;
 public class GridPicturesActivity extends AppCompatActivity implements GridPictureContract.GridPictureView {
 
     private CallbackManager mCallBackManager;
-    private String album_id;
-    private String[] album_images, album_ids;
     private GridView grid;
+    private ImageGridAdapter adapter;
     @Inject GridPicturesPresenter presenter;
 
     @Override
@@ -47,57 +42,13 @@ public class GridPicturesActivity extends AppCompatActivity implements GridPictu
         setContentView(R.layout.activity_grid_pictures);
 
         injectDaggerGridPicturesComponent();
-        presenter.getPictures();
+        setUpPictureGrid();
 
-        grid = (GridView) findViewById(R.id.grid);
+        presenter.getPictures();
 
 
         mCallBackManager = CallbackManager.Factory.create();
 
-        album_id = getIntent().getStringExtra("id");
-
-        GraphRequest request = GraphRequest.newGraphPathRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/"+album_id+"/photos?fields=picture",
-                new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
-                        Log.d("FACEBOOK RESPONSE", response.toString());
-                        try {
-                            JSONObject dataResponse = response.getJSONObject();
-                            JSONArray data = dataResponse.getJSONArray("data");
-
-                            album_images = new String[data.length()];
-                            album_ids = new String[data.length()];
-
-                            for(int i = 0; i < data.length(); i++){
-                                album_images[i] = data.getJSONObject(i).getString("picture");
-                                album_ids[i] = data.getJSONObject(i).getString("id");
-
-                                grid.setAdapter(new ImageGridAdapter(GridPicturesActivity.this, album_images));
-                                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                                        Toast.makeText(GridPicturesActivity.this, album_ids[i] + " Clicked", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(GridPicturesActivity.this, FullScreenActivity.class);
-                                        intent.putExtra("id", album_ids[i]);
-                                        startActivity(intent);
-
-                                    }
-                                });
-
-                            }
-
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-        );
-
-        request.executeAsync();
     }
 
     @Override
@@ -133,8 +84,8 @@ public class GridPicturesActivity extends AppCompatActivity implements GridPictu
     }
 
     @Override
-    public void updatePictureGrid(String[] pictures) {
-
+    public void updatePictureGrid(List<Picture> pictureList) {
+        adapter.updatePictures(pictureList);
     }
 
     private void injectDaggerGridPicturesComponent(){
@@ -144,5 +95,19 @@ public class GridPicturesActivity extends AppCompatActivity implements GridPictu
                 .gridPicturesModule(new GridPicturesModule(this))
                 .build()
                 .inject(this);
+    }
+
+    private void setUpPictureGrid(){
+        grid = findViewById(R.id.grid);
+        adapter = new ImageGridAdapter(this, new ArrayList<Picture>());
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(GridPicturesActivity.this, FullScreenActivity.class);
+                intent.putExtra("id", String.valueOf(l));
+                startActivity(intent);
+            }
+        });
     }
 }
