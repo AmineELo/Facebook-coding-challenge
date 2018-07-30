@@ -1,10 +1,11 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.amineelouattar.codingchallenge.R;
+import com.example.amineelouattar.codingchallenge.album_list.AlbumListActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -16,8 +17,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginButton mLoginButton;
     private CallbackManager mCallBackManager;
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
 
 
     @Override
@@ -25,16 +24,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mSharedPreferences = this.getSharedPreferences(Variables.SHARED_PREFERENCES, Variables.SHPREF_MODE);
-        mEditor = mSharedPreferences.edit();
-
         if(AccessToken.getCurrentAccessToken() != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, AlbumListActivity.class);
             startActivity(intent);
             finish();
         }
 
-        mLoginButton = (LoginButton) findViewById(R.id.login_button);
+        mLoginButton = findViewById(R.id.login_button);
         mLoginButton.setReadPermissions("user_about_me");
         mLoginButton.setReadPermissions("user_photos");
 
@@ -43,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, AlbumListActivity.class);
                 startActivity(intent);
                 finish();
             }
