@@ -5,16 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.amineelouattar.codingchallenge.BaseApplication;
 import com.example.amineelouattar.codingchallenge.album_list.adapter.AlbumListAdapter;
@@ -22,20 +17,12 @@ import com.example.amineelouattar.codingchallenge.album_list.component.DaggerAlb
 import com.example.amineelouattar.codingchallenge.album_list.model.Album;
 import com.example.amineelouattar.codingchallenge.album_list.model.User;
 import com.example.amineelouattar.codingchallenge.album_list.module.AlbumListModule;
-import com.example.amineelouattar.codingchallenge.album_list.module.ContextModule;
-import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
+import com.example.amineelouattar.codingchallenge.utils.module.ContextModule;
 import com.example.amineelouattar.codingchallenge.login.LoginActivity;
 import com.example.amineelouattar.codingchallenge.R;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

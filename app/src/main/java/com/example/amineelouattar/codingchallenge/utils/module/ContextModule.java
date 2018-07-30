@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge.album_list.module;
+package com.example.amineelouattar.codingchallenge.utils.module;
 
 import android.content.Context;
 

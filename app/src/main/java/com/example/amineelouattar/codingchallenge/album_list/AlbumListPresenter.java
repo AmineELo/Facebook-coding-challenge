@@ -1,20 +1,14 @@
 package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.example.amineelouattar.codingchallenge.album_list.model.Album;
 import com.example.amineelouattar.codingchallenge.album_list.model.User;
-import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
-import com.example.amineelouattar.codingchallenge.utils.FacebookDataModelInterface;
+import com.example.amineelouattar.codingchallenge.utils.facebook_data.FacebookDataModelInterface;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;

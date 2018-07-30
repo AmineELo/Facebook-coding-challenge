@@ -1,9 +1,9 @@
 package com.example.amineelouattar.codingchallenge.album_list.module;
 
 import com.example.amineelouattar.codingchallenge.album_list.AlbumListContract;
-import com.example.amineelouattar.codingchallenge.utils.FacebookDataModel;
+import com.example.amineelouattar.codingchallenge.utils.facebook_data.FacebookDataModel;
 import com.example.amineelouattar.codingchallenge.utils.ActivityScope;
-import com.example.amineelouattar.codingchallenge.utils.FacebookDataModelInterface;
+import com.example.amineelouattar.codingchallenge.utils.facebook_data.FacebookDataModelInterface;
 
 import dagger.Module;
 import dagger.Provides;

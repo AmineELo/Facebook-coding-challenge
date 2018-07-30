@@ -1,6 +1,5 @@
-package com.example.amineelouattar.codingchallenge.utils;
+package com.example.amineelouattar.codingchallenge.utils.facebook_data;
 
-import com.example.amineelouattar.codingchallenge.album_list.AlbumListContract;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 
