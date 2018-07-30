@@ -1,10 +1,16 @@
 package com.example.amineelouattar.codingchallenge.album_list;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +29,7 @@ import com.example.amineelouattar.codingchallenge.R;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +39,8 @@ import javax.inject.Inject;
 public class AlbumListActivity extends AppCompatActivity implements AlbumListContract.AlbumListView {
 
     private CallbackManager mCallBackManager;
-    private ImageView profilePictureHolder;
-    private TextView textArea;
     private RecyclerView albumList;
+    private Toolbar toolbar;
     private AlbumListAdapter adapter;
     @Inject
     AlbumListPresenter presenter;
@@ -89,10 +95,31 @@ public class AlbumListActivity extends AppCompatActivity implements AlbumListCon
 
     @Override
     public void updateUserSection(User user) {
-        textArea.setText(user.getName());
+        setTitle(user.getName());
+
         Picasso.get()
                 .load(user.getPictureUrl())
-                .into(profilePictureHolder);
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+                        drawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
+                        if(getSupportActionBar() != null){
+                            getSupportActionBar().setIcon(drawable);
+                            getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        }
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
     }
 
     private void setUpAlbumList(){
@@ -103,9 +130,9 @@ public class AlbumListActivity extends AppCompatActivity implements AlbumListCon
     }
 
     private void bindViews(){
-        profilePictureHolder = findViewById(R.id.profile_picture);
         albumList = findViewById(R.id.album_list);
-        textArea = findViewById(R.id.textArea);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     private void injectDaggerComponent(){
