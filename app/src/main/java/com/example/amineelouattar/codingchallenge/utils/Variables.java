@@ -1,4 +1,4 @@
-package com.example.amineelouattar.codingchallenge;
+package com.example.amineelouattar.codingchallenge.utils;
 
 import android.content.SharedPreferences;
 
