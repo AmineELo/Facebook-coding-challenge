@@ -3,6 +3,7 @@ package com.example.amineelouattar.codingchallenge.pictures_grid.module;
 import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictureContract;
 import com.example.amineelouattar.codingchallenge.utils.ActivityScope;
 import com.example.amineelouattar.codingchallenge.utils.facebook_data.FacebookDataModel;
+import com.example.amineelouattar.codingchallenge.utils.facebook_data.FacebookDataModelInterface;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,7 +25,7 @@ public class GridPicturesModule {
 
     @ActivityScope
     @Provides
-    public FacebookDataModel provideModel(){
+    public FacebookDataModelInterface provideModel(){
         return new FacebookDataModel();
     }
 }

@@ -12,9 +12,14 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.amineelouattar.codingchallenge.BaseApplication;
 import com.example.amineelouattar.codingchallenge.R;
 import com.example.amineelouattar.codingchallenge.login.LoginActivity;
 import com.example.amineelouattar.codingchallenge.picture_fullscreen.FullScreenActivity;
+import com.example.amineelouattar.codingchallenge.pictures_grid.adapter.ImageGridAdapter;
+import com.example.amineelouattar.codingchallenge.pictures_grid.component.DaggerGridPicturesComponent;
+import com.example.amineelouattar.codingchallenge.pictures_grid.module.GridPicturesModule;
+import com.example.amineelouattar.codingchallenge.utils.module.ContextModule;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.GraphRequest;
@@ -25,17 +30,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.inject.Inject;
+
+
 public class GridPicturesActivity extends AppCompatActivity implements GridPictureContract.GridPictureView {
 
     private CallbackManager mCallBackManager;
     private String album_id;
     private String[] album_images, album_ids;
     private GridView grid;
+    @Inject GridPicturesPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_pictures);
+
+        injectDaggerGridPicturesComponent();
+        presenter.getPictures();
 
         grid = (GridView) findViewById(R.id.grid);
 
@@ -123,5 +135,14 @@ public class GridPicturesActivity extends AppCompatActivity implements GridPictu
     @Override
     public void updatePictureGrid(String[] pictures) {
 
+    }
+
+    private void injectDaggerGridPicturesComponent(){
+        DaggerGridPicturesComponent.builder()
+                .appComponent(((BaseApplication)getApplicationContext()).getAppComponent())
+                .contextModule(new ContextModule(this))
+                .gridPicturesModule(new GridPicturesModule(this))
+                .build()
+                .inject(this);
     }
 }

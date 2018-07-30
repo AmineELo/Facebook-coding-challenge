@@ -9,7 +9,7 @@ import com.example.amineelouattar.codingchallenge.utils.module.ContextModule;
 import dagger.Component;
 
 @ActivityScope
-@Component(dependencies = AppComponent.class, modules = {ContextModule.class, GridPicturesModule.class})
+@Component(dependencies = AppComponent.class, modules = {GridPicturesModule.class, ContextModule.class})
 public interface GridPicturesComponent {
     void inject(GridPicturesActivity gridPicturesActivity);
 }
