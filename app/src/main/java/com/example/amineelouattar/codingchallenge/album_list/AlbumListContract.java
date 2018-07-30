@@ -2,8 +2,6 @@ package com.example.amineelouattar.codingchallenge.album_list;
 
 import com.example.amineelouattar.codingchallenge.album_list.model.Album;
 import com.example.amineelouattar.codingchallenge.album_list.model.User;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 
 import java.util.List;
@@ -19,9 +17,5 @@ public interface AlbumListContract {
     interface AlbumListView{
         void updateAlbumList(List<Album> albumList);
         void updateUserSection(User user);
-    }
-
-    interface AlbumListModel{
-        void executeGraphRequest(AccessToken accessToken, String graphPath, GraphRequest.Callback callback);
     }
 }

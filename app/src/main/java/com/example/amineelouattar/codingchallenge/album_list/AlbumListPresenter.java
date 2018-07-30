@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.amineelouattar.codingchallenge.album_list.model.Album;
 import com.example.amineelouattar.codingchallenge.album_list.model.User;
 import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
+import com.example.amineelouattar.codingchallenge.utils.FacebookDataModelInterface;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -27,12 +28,12 @@ import javax.inject.Inject;
 public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter {
 
     private AlbumListContract.AlbumListView view;
-    private AlbumListContract.AlbumListModel model;
+    private FacebookDataModelInterface model;
     @Inject
     Context context;
 
     @Inject
-    public AlbumListPresenter(AlbumListContract.AlbumListView view, AlbumListContract.AlbumListModel model) {
+    public AlbumListPresenter(AlbumListContract.AlbumListView view, FacebookDataModelInterface model) {
         this.view = view;
         this.model = model;
     }

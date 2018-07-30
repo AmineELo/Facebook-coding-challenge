@@ -1,8 +1,9 @@
 package com.example.amineelouattar.codingchallenge.album_list.module;
 
 import com.example.amineelouattar.codingchallenge.album_list.AlbumListContract;
-import com.example.amineelouattar.codingchallenge.album_list.AlbumListModel;
+import com.example.amineelouattar.codingchallenge.utils.FacebookDataModel;
 import com.example.amineelouattar.codingchallenge.utils.ActivityScope;
+import com.example.amineelouattar.codingchallenge.utils.FacebookDataModelInterface;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,7 +24,7 @@ public class AlbumListModule {
 
     @ActivityScope
     @Provides
-    public AlbumListContract.AlbumListModel provideModel(){
-        return new AlbumListModel();
+    public FacebookDataModelInterface provideModel(){
+        return new FacebookDataModel();
     }
 }

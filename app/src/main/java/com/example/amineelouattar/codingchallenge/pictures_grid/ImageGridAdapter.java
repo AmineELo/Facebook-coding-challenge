@@ -53,9 +53,9 @@ public class ImageGridAdapter extends BaseAdapter {
             holder = new ViewHolder();
             assert v != null;
 
-            holder.imageView = (ImageView) v.findViewById(R.id.image);
+            holder.imageView = v.findViewById(R.id.image);
 
-            holder.progressBar = (ProgressBar) v.findViewById(R.id.progress);
+            holder.progressBar = v.findViewById(R.id.progress);
 
             v.setTag(holder);
         } else {
