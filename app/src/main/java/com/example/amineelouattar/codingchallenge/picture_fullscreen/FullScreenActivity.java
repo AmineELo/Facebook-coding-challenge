@@ -22,24 +22,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FullScreenActivity extends AppCompatActivity {
+public class FullScreenActivity extends AppCompatActivity implements FullScreenContract.FullScreenView {
 
     private CallbackManager mCallBackManager;
     private ImageView imageView;
-    private String photo_id;
+    private String photoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen);
 
-        imageView = (ImageView) findViewById(R.id.fullscreen);
+        imageView = findViewById(R.id.fullscreen);
         mCallBackManager = CallbackManager.Factory.create();
-        photo_id = getIntent().getStringExtra("id");
+        photoId = getIntent().getStringExtra("id");
 
         GraphRequest request = GraphRequest.newGraphPathRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/"+ photo_id +"/?fields=images",
+                "/"+ photoId +"/?fields=images",
                 new GraphRequest.Callback() {
                     @Override
                     public void onCompleted(GraphResponse response) {
@@ -97,5 +97,14 @@ public class FullScreenActivity extends AppCompatActivity {
             default:
                 return true;
         }
+    }
+
+    @Override
+    public void updateView(String pictureUrl) {
+        Picasso.get()
+                .load(pictureUrl)
+                .placeholder(R.drawable.placeholderthumbnail)
+                .error(R.drawable.androiderror)
+                .into(imageView);
     }
 }

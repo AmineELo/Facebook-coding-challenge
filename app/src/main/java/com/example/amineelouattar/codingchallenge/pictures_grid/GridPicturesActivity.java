@@ -43,10 +43,7 @@ public class GridPicturesActivity extends AppCompatActivity implements GridPictu
 
         injectDaggerGridPicturesComponent();
         setUpPictureGrid();
-
         presenter.getPictures();
-
-
         mCallBackManager = CallbackManager.Factory.create();
 
     }
