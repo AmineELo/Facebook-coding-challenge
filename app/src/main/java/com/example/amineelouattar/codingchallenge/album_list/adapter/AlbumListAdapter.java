@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.amineelouattar.codingchallenge.R;
 import com.example.amineelouattar.codingchallenge.album_list.model.Album;
-import com.example.amineelouattar.codingchallenge.pictures_grid.GridPictures;
+import com.example.amineelouattar.codingchallenge.pictures_grid.GridPicturesActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Albu
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, GridPictures.class);
+                    Intent intent = new Intent(context, GridPicturesActivity.class);
                     intent.putExtra("id", albumList.get(getAdapterPosition()).getAlbumId());
                     context.startActivity(intent);
                 }

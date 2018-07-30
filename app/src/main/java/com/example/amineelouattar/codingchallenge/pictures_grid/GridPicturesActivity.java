@@ -25,7 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GridPictures extends AppCompatActivity {
+public class GridPicturesActivity extends AppCompatActivity implements GridPictureContract.GridPictureView {
 
     private CallbackManager mCallBackManager;
     private String album_id;
@@ -62,13 +62,13 @@ public class GridPictures extends AppCompatActivity {
                                 album_images[i] = data.getJSONObject(i).getString("picture");
                                 album_ids[i] = data.getJSONObject(i).getString("id");
 
-                                grid.setAdapter(new ImageGridAdapter(GridPictures.this, album_images));
+                                grid.setAdapter(new ImageGridAdapter(GridPicturesActivity.this, album_images));
                                 grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                                        Toast.makeText(GridPictures.this, album_ids[i] + " Clicked", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(GridPictures.this, FullScreenActivity.class);
+                                        Toast.makeText(GridPicturesActivity.this, album_ids[i] + " Clicked", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(GridPicturesActivity.this, FullScreenActivity.class);
                                         intent.putExtra("id", album_ids[i]);
                                         startActivity(intent);
 
@@ -110,7 +110,7 @@ public class GridPictures extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.logout :
-                startActivity(new Intent(GridPictures.this, LoginActivity.class));
+                startActivity(new Intent(GridPicturesActivity.this, LoginActivity.class));
                 LoginManager.getInstance().logOut();
                 finish();
                 return true;
@@ -118,5 +118,10 @@ public class GridPictures extends AppCompatActivity {
             default:
                 return true;
         }
+    }
+
+    @Override
+    public void updatePictureGrid(String[] pictures) {
+
     }
 }

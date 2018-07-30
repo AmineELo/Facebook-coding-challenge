@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".album_list.AlbumListActivity" />
-        <activity android:name=".pictures_grid.GridPictures" />
+        <activity android:name=".pictures_grid.GridPicturesActivity" />
         <activity android:name=".picture_fullscreen.FullScreenActivity"></activity>
     </application>
 
