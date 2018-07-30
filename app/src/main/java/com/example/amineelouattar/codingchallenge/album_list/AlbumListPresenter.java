@@ -48,7 +48,7 @@ public class AlbumListPresenter implements AlbumListContract.AlbumListPresenter 
 
     @Override
     public void getAlbums() {
-        String graphPath = "/me/albums?fields=cover_photo,picture,name";
+        String graphPath = "/me/albums?fields=cover_photo,picture,name,count";
         GraphRequest.Callback responseCallback = new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
