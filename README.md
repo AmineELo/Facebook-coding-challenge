@@ -3,7 +3,8 @@
 #### Description
 
 This is an android application that uses Facebook's graph API to grant access to albums and photos in order to list them to the user.
-this app architecture follows the model-view-model patterns.
+
+this app architecture follows the model-view-presenter patterns.
 
 #### Technologies used
 
